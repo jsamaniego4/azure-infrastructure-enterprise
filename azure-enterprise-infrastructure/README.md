@@ -4,11 +4,13 @@ A reproducible Azure administration lab for demonstrating networking, identity, 
 
 **Status:** deployment configuration and local automated checks are complete. Azure deployment, connectivity, alert delivery, screenshots, and incident evidence are pending. This is a single-VM learning environment; availability, backups, and centralized guest logging are outside its scope.
 
-## Architecture
+## Infrastructure topology
 
-![Azure lab architecture: restricted SSH access, scoped managed identity, and CPU email alerts](docs/images/architecture.svg)
+![Azure infrastructure topology showing the resource group, VNet, subnet, SSH access path, managed identity, and CPU alert notifications](docs/images/architecture.svg)
 
-*Blue: compute and networking · Purple: identity and access · Green: monitoring · Amber: network security.*
+SSH access follows the administrator → Standard public IP → network interface → Ubuntu VM path. The NIC and VM sit in `app-subnet` (`10.20.1.0/24`) within the VNet (`10.20.0.0/16`). The NSG is associated with the subnet; the VM's system-assigned identity has Reader access scoped to the lab resource group. Azure Monitor evaluates average CPU every minute and triggers the email action group when it exceeds 80% over five minutes.
+
+Solid arrows show traffic or notifications. Dashed lines show associations or identity relationships. Resource labels match the Terraform naming expressions.
 
 The diagram shows the intended deployment. Azure's default VNet NSG rules also apply; live connectivity and email delivery remain to be verified.
 

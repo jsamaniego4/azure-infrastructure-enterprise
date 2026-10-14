@@ -10,7 +10,11 @@ A reproducible Azure engineering lab built with Terraform, Ubuntu, and GitHub Ac
 
 </div>
 
-![Azure lab architecture showing restricted SSH access, scoped managed identity, and CPU email alerts](azure-enterprise-infrastructure/docs/images/architecture.svg)
+## Infrastructure topology
+
+![Azure infrastructure topology showing the resource group, VNet, subnet, SSH access path, managed identity, and CPU alert notifications](azure-enterprise-infrastructure/docs/images/architecture.svg)
+
+SSH access follows the public IP → network interface → VM path. The diagram shows resource boundaries, the subnet NSG association, resource-group Reader access, and the CPU alert email flow. Solid arrows show traffic or notifications; dashed lines show associations or identity relationships.
 
 > **Project status:** Local Terraform validation and four security tests passed. Live Azure deployment, alert delivery, screenshots, and recovery evidence are pending.
 
