@@ -8,6 +8,8 @@ A reproducible Azure administration lab for demonstrating networking, identity, 
 
 ![Azure infrastructure topology showing the resource group, VNet, subnet, SSH access path, managed identity, and CPU alert notifications](docs/images/architecture.svg)
 
+[View full-size diagram](docs/images/architecture.svg)
+
 SSH access follows the administrator → Standard public IP → network interface → Ubuntu VM path. The NIC and VM sit in `app-subnet` (`10.20.1.0/24`) within the VNet (`10.20.0.0/16`). The NSG is associated with the subnet; the VM's system-assigned identity has Reader access scoped to the lab resource group. Azure Monitor evaluates average CPU every minute and triggers the email action group when it exceeds 80% over five minutes.
 
 Solid arrows show traffic or notifications. Dashed lines show associations or identity relationships. Resource labels match the Terraform naming expressions.

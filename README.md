@@ -14,7 +14,9 @@ A reproducible Azure engineering lab built with Terraform, Ubuntu, and GitHub Ac
 
 ![Azure infrastructure topology showing the resource group, VNet, subnet, SSH access path, managed identity, and CPU alert notifications](azure-enterprise-infrastructure/docs/images/architecture.svg)
 
-SSH access follows the public IP → network interface → VM path. The diagram shows resource boundaries, the subnet NSG association, resource-group Reader access, and the CPU alert email flow. Solid arrows show traffic or notifications; dashed lines show associations or identity relationships.
+[View full-size diagram](azure-enterprise-infrastructure/docs/images/architecture.svg)
+
+SSH access follows the administrator → Standard public IP → network interface → Ubuntu VM path. The diagram shows resource boundaries, the subnet NSG association, resource-group Reader access, and the CPU alert email flow. Solid arrows show traffic or notifications; dashed lines show associations or identity relationships.
 
 > **Project status:** Local Terraform validation and four security tests passed. Live Azure deployment, alert delivery, screenshots, and recovery evidence are pending.
 
@@ -47,7 +49,8 @@ The script validates the configuration and creates a deployment plan. Review the
 | --- | --- |
 | [Terraform](azure-enterprise-infrastructure/terraform/) | Azure resources, inputs, outputs, provider lock file, and security tests |
 | [Scripts](azure-enterprise-infrastructure/scripts/) | Deployment preflight and live infrastructure checks |
-| [Documentation](azure-enterprise-infrastructure/docs/) | Architecture, deployment runbook, local validation results, and evidence tracker |
+| [Infrastructure diagram](azure-enterprise-infrastructure/docs/images/architecture.svg) | Resource boundaries, SSH access, managed identity, and CPU alert notifications |
+| [Documentation](azure-enterprise-infrastructure/docs/) | Deployment runbook, local validation results, and evidence tracker |
 | [Testing guide](azure-enterprise-infrastructure/TESTING.md) | Connectivity checks, CPU alert exercise, and recovery validation |
 | [GitHub Actions](.github/workflows/terraform.yml) | Automated formatting, validation, and mock tests |
 
