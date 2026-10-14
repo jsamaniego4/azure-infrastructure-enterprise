@@ -6,7 +6,7 @@ A reproducible Azure administration lab for demonstrating networking, identity, 
 
 ## Infrastructure topology
 
-![Azure infrastructure topology showing the resource group, VNet, subnet, SSH access path, managed identity, and CPU alert notifications](docs/images/architecture.svg)
+![Azure infrastructure topology showing the resource group, VNet, subnet, SSH access path, managed identity, and CPU alert notifications](docs/images/architecture.png)
 
 [View full-size diagram](docs/images/architecture.svg)
 
