@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="820" viewBox="0 0 1120 820" role="img" aria-labelledby="title desc">
+<title id="title">Azure infrastructure lab architecture</title>
+<desc id="desc">An administrator connects over SSH from one allowlisted IPv4 address through a Standard public IP and network interface to an Ubuntu VM. A subnet NSG filters traffic. The VM has a system-assigned identity with Reader access scoped to its resource group. Azure Monitor sends CPU alerts through an email action group to the owner. Terraform provisions the resources, and GitHub Actions checks the configuration.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1223"/><stop offset="1" stop-color="#13243c"/></linearGradient>
+  <linearGradient id="compute" x2="1" y2="1"><stop stop-color="#123d62"/><stop offset="1" stop-color="#164a75"/></linearGradient>
+  <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#8ca9c8" stroke-width="1.5"/></marker>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; }
+    .label { font-size: 15px; font-weight: 600; fill: #edf5ff; }
+    .sub { font-size: 12px; fill: #b5c9df; }
+    .over { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; }
+    .line { fill: none; stroke: #8ca9c8; stroke-width: 1.7; marker-end: url(#arrow); }
+  </style>
+</defs>
+<rect width="1120" height="820" rx="24" fill="url(#bg)"/>
+<path d="M40 112 H1080" stroke="#2a3d55"/>
+<text x="40" y="42" class="over" fill="#65caff">AZURE / INFRASTRUCTURE AS CODE</text>
+<text x="40" y="77" font-size="28" font-weight="700" fill="#f3f8ff">A secure path from access to observability</text>
+<rect x="852" y="28" width="228" height="30" rx="15" fill="#263446"/>
+<circle cx="870" cy="43" r="4" fill="#f4bb62"/>
+<text x="883" y="47" font-size="11" font-weight="600" fill="#f4d4a4">LAB DESIGN · DEPLOYMENT PENDING</text>
+<text x="40" y="145" class="over" fill="#91a9c4">01 / ADMINISTRATION</text>
+<text x="316" y="145" class="over" fill="#65caff">02 / AZURE RESOURCE GROUP</text>
+<text x="825" y="145" class="over" fill="#52dbc2">03 / MONITORING</text>
+<rect x="294" y="164" width="802" height="566" rx="20" fill="#0e1b2e" stroke="#2a4a68"/>
+<text x="318" y="191" class="sub">Dedicated lab boundary · resources managed by Terraform</text>
+<rect x="314" y="212" width="456" height="326" rx="16" fill="#12263c" stroke="#316491"/>
+<text x="336" y="241" class="label">Virtual network</text>
+<text x="336" y="261" class="sub">10.20.0.0/16</text>
+<rect x="334" y="282" width="416" height="236" rx="14" fill="#142d46" stroke="#416383" stroke-dasharray="5 5"/>
+<text x="352" y="308" class="sub">APP SUBNET · 10.20.1.0/24</text>
+<rect x="40" y="212" width="218" height="106" rx="12" fill="#182a40" stroke="#a5b4fc" stroke-opacity="0.45"/><rect x="40" y="228" width="3" height="74" rx="1.5" fill="#a5b4fc"/><text x="58" y="235" class="over" fill="#a5b4fc">ACCESS</text><text x="58" y="258" class="label">Administrator</text><text x="58" y="279" class="sub">One allowlisted IPv4 /32</text><text x="58" y="296" class="sub">SSH public-key authentication</text><rect x="40" y="375" width="218" height="86" rx="12" fill="#182a40" stroke="#a5b4fc" stroke-opacity="0.45"/><rect x="40" y="391" width="3" height="54" rx="1.5" fill="#a5b4fc"/><text x="58" y="405" class="label">Standard public IP</text><text x="58" y="426" class="sub">Static administrative endpoint</text><rect x="352" y="332" width="176" height="70" rx="12" fill="#182a40" stroke="#65caff" stroke-opacity="0.45"/><rect x="352" y="348" width="3" height="38" rx="1.5" fill="#65caff"/><text x="370" y="362" class="label">Network interface</text><text x="370" y="383" class="sub">Private IP · dynamic</text><rect x="552" y="332" width="180" height="70" rx="12" fill="#182a40" stroke="#f4bb62" stroke-opacity="0.45"/><rect x="552" y="348" width="3" height="38" rx="1.5" fill="#f4bb62"/><text x="570" y="362" class="label">Subnet NSG</text><text x="570" y="383" class="sub">Allowlisted SSH only</text><rect x="352" y="430" width="380" height="68" rx="12" fill="url(#compute)" stroke="#65caff" stroke-opacity="0.45"/><rect x="352" y="446" width="3" height="36" rx="1.5" fill="#65caff"/><text x="370" y="460" class="label">Ubuntu 22.04 VM</text><text x="370" y="481" class="sub">System-assigned identity · passwords disabled</text><rect x="800" y="232" width="270" height="100" rx="12" fill="#182a40" stroke="#52dbc2" stroke-opacity="0.45"/><rect x="800" y="248" width="3" height="68" rx="1.5" fill="#52dbc2"/><text x="818" y="255" class="over" fill="#52dbc2">DETECT</text><text x="818" y="278" class="label">Azure Monitor</text><text x="818" y="299" class="sub">Platform metric: Percentage CPU</text><text x="818" y="316" class="sub">Average &gt; 80% over 5 minutes</text><rect x="800" y="390" width="270" height="86" rx="12" fill="#182a40" stroke="#52dbc2" stroke-opacity="0.45"/><rect x="800" y="406" width="3" height="54" rx="1.5" fill="#52dbc2"/><text x="818" y="420" class="label">Email action group</text><text x="818" y="441" class="sub">Common alert schema enabled</text><rect x="825" y="606" width="224" height="86" rx="12" fill="#182a40" stroke="#52dbc2" stroke-opacity="0.45"/><rect x="825" y="622" width="3" height="54" rx="1.5" fill="#52dbc2"/><text x="843" y="636" class="label">Lab owner</text><text x="843" y="657" class="sub">Receives CPU notifications</text><rect x="334" y="584" width="226" height="106" rx="12" fill="#182a40" stroke="#c2a5ff" stroke-opacity="0.45"/><rect x="334" y="600" width="3" height="74" rx="1.5" fill="#c2a5ff"/><text x="352" y="607" class="over" fill="#c2a5ff">IDENTITY &amp; RBAC</text><text x="352" y="630" class="label">Managed identity</text><text x="352" y="651" class="sub">System-assigned to the VM</text><text x="352" y="668" class="sub">Reader role · lab resource group</text><rect x="610" y="584" width="160" height="106" rx="12" fill="#182a40" stroke="#c2a5ff" stroke-opacity="0.45"/><rect x="610" y="600" width="3" height="74" rx="1.5" fill="#c2a5ff"/><text x="628" y="607" class="over" fill="#c2a5ff">SCOPED ACCESS</text><text x="628" y="630" class="label">Lab resources</text><text x="628" y="651" class="sub">Read-only inspection</text><text x="628" y="668" class="sub">No write permissions</text>
+<path class="line" d="M149 318 V375"/>
+<text x="163" y="351" class="sub">SSH · TCP 22</text>
+<path class="line" d="M258 417 H286 V367 H352"/>
+<path class="line" d="M440 402 V430"/>
+<path class="line" d="M552 367 H528" stroke-dasharray="4 4"/>
+<path class="line" d="M732 464 H784 V282 H800"/>
+<text x="800" y="359" class="sub">Evaluated every minute</text>
+<path class="line" d="M935 332 V390"/>
+<path class="line" d="M935 476 V606"/>
+<text x="951" y="543" class="sub">Email</text>
+<path class="line" d="M447 498 V584"/>
+<path class="line" d="M560 637 H610"/>
+<path d="M40 754 H1080" stroke="#2a3d55"/>
+<circle cx="46" cy="783" r="5" fill="#65caff"/>
+<text x="61" y="787" class="sub">Terraform provisions</text>
+<circle cx="270" cy="783" r="5" fill="#a5b4fc"/>
+<text x="285" y="787" class="sub">GitHub Actions validates</text>
+<circle cx="532" cy="783" r="5" fill="#f4bb62"/>
+<text x="547" y="787" class="sub">Single VM · no high availability</text>
+<text x="856" y="787" class="sub">Azure engineering portfolio</text>
+</svg>

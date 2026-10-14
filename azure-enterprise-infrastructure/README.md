@@ -6,24 +6,11 @@ A reproducible Azure administration lab for demonstrating networking, identity, 
 
 ## Architecture
 
-```mermaid
-flowchart TD
-  Admin[Administrator: allowlisted IPv4 /32] -->|SSH port 22| IP[Standard public IP]
-  IP --> NIC[Network interface]
-  subgraph RG[Dedicated lab resource group]
-    subgraph VNet[VNet 10.20.0.0/16]
-      subgraph Subnet[App subnet 10.20.1.0/24]
-        NIC --> VM[Ubuntu 22.04 VM]
-        NSG[Subnet NSG: SSH allowlist] -. filters .-> NIC
-      end
-    end
-    VM --> MI[System-assigned managed identity]
-    MI -->|Reader scope| RGAccess[Lab resource group resources]
-    VM -->|Platform CPU metric| Alert[Azure Monitor: average >80% over 5 min]
-    Alert --> Action[Email action group]
-  end
-  Action --> Owner[Lab owner]
-```
+![Azure lab architecture: restricted SSH access, scoped managed identity, and CPU email alerts](docs/images/architecture.svg)
+
+*Blue: compute and networking · Purple: identity and access · Green: monitoring · Amber: network security.*
+
+The diagram shows the intended deployment. Azure's default VNet NSG rules also apply; live connectivity and email delivery remain to be verified.
 
 ## Reproduce
 

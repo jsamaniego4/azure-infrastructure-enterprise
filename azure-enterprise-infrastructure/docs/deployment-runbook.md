@@ -13,3 +13,13 @@ This is a single-VM lab, with a public IP for tightly restricted administration.
 Local state is deliberately used for a single-user lab. Keep it securely backed up until teardown; losing it prevents straightforward management of existing resources. Plans and state can contain personal settings and credentials and are gitignored. Do not upload them as proof. For team use, migrate state to a separately managed Azure Storage backend with access controls and locking before collaboration. Commit `.terraform.lock.hcl` and use `terraform init -upgrade` only for intentional provider updates.
 
 If apply partially fails, inspect the error and run a fresh plan against the same state. Do not delete state or reapply an old plan. RBAC propagation may delay identity access. A changed public IP requires a new plan/apply updating the allowlist. Updating SSH public keys on an existing VM may require replacement; inspect the plan first.
+
+## Provider lock file across platforms
+
+After intentionally updating a provider, generate signed checksums for both the Linux GitHub runner and Apple Silicon development machines before committing the lock file:
+
+```sh
+terraform providers lock -platform=linux_amd64 -platform=darwin_arm64
+```
+
+CI uses `-lockfile=readonly`. Without the Linux package's `h1` checksum, initialization can verify its downloaded ZIP using `zh` checksums, but subsequent validation can reject the extracted package. Keep checksum verification enabled and commit the cross-platform lock file. Add other platforms explicitly if needed.
