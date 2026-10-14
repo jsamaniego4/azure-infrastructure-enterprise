@@ -1,0 +1,16 @@
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+*tfplan*
+*.plan
+crash.log
+crash.*.log
+.env
+.env.*
+*.pem
+*.key
+**/evidence/raw/
+.DS_Store

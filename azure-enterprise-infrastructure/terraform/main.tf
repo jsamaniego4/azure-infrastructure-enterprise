@@ -1,8 +1,10 @@
 resource "azurerm_resource_group" "lab" {
   name     = "${var.prefix}-rg"
   location = var.location
+  tags     = var.tags
 }
 resource "azurerm_virtual_network" "lab" {
+  tags                = var.tags
   name                = "${var.prefix}-vnet"
   address_space       = ["10.20.0.0/16"]
   location            = azurerm_resource_group.lab.location
@@ -15,6 +17,7 @@ resource "azurerm_subnet" "app" {
   address_prefixes     = ["10.20.1.0/24"]
 }
 resource "azurerm_network_security_group" "app" {
+  tags                = var.tags
   name                = "${var.prefix}-nsg"
   location            = azurerm_resource_group.lab.location
   resource_group_name = azurerm_resource_group.lab.name
@@ -35,6 +38,7 @@ resource "azurerm_subnet_network_security_group_association" "app" {
   network_security_group_id = azurerm_network_security_group.app.id
 }
 resource "azurerm_public_ip" "vm" {
+  tags                = var.tags
   name                = "${var.prefix}-ip"
   resource_group_name = azurerm_resource_group.lab.name
   location            = azurerm_resource_group.lab.location
@@ -42,6 +46,7 @@ resource "azurerm_public_ip" "vm" {
   sku                 = "Standard"
 }
 resource "azurerm_network_interface" "vm" {
+  tags                = var.tags
   name                = "${var.prefix}-nic"
   location            = azurerm_resource_group.lab.location
   resource_group_name = azurerm_resource_group.lab.name
@@ -53,6 +58,7 @@ resource "azurerm_network_interface" "vm" {
   }
 }
 resource "azurerm_linux_virtual_machine" "lab" {
+  tags                            = var.tags
   name                            = "${var.prefix}-vm"
   resource_group_name             = azurerm_resource_group.lab.name
   location                        = azurerm_resource_group.lab.location
@@ -60,6 +66,7 @@ resource "azurerm_linux_virtual_machine" "lab" {
   admin_username                  = "azureuser"
   disable_password_authentication = true
   network_interface_ids           = [azurerm_network_interface.vm.id]
+  depends_on                      = [azurerm_subnet_network_security_group_association.app]
   identity { type = "SystemAssigned" }
   admin_ssh_key {
     username   = "azureuser"
@@ -77,6 +84,7 @@ resource "azurerm_linux_virtual_machine" "lab" {
   }
 }
 resource "azurerm_monitor_metric_alert" "high_cpu" {
+  tags                = var.tags
   name                = "${var.prefix}-high-cpu"
   resource_group_name = azurerm_resource_group.lab.name
   scopes              = [azurerm_linux_virtual_machine.lab.id]
@@ -84,6 +92,9 @@ resource "azurerm_monitor_metric_alert" "high_cpu" {
   severity            = 2
   window_size         = "PT5M"
   frequency           = "PT1M"
+  action {
+    action_group_id = azurerm_monitor_action_group.ops.id
+  }
   criteria {
     metric_namespace = "Microsoft.Compute/virtualMachines"
     metric_name      = "Percentage CPU"
@@ -91,4 +102,24 @@ resource "azurerm_monitor_metric_alert" "high_cpu" {
     operator         = "GreaterThan"
     threshold        = 80
   }
+}
+
+resource "azurerm_monitor_action_group" "ops" {
+  name                = "${var.prefix}-ops"
+  resource_group_name = azurerm_resource_group.lab.name
+  short_name          = "lab-ops"
+  tags                = var.tags
+  email_receiver {
+    name                    = "lab-owner"
+    email_address           = var.alert_email
+    use_common_alert_schema = true
+  }
+}
+
+# Demonstrates least privilege: the VM can inspect only its own resource group.
+resource "azurerm_role_assignment" "vm_reader" {
+  scope                = azurerm_resource_group.lab.id
+  role_definition_name = "Reader"
+  principal_id         = azurerm_linux_virtual_machine.lab.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
 }
